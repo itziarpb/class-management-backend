@@ -8,7 +8,20 @@ import { StudentModule } from './student/student.module';
 import { LessonModule } from './lesson/lesson.module';
 
 @Module({
-  imports: [TeacherModule, ApiModule, StudentModule, LessonModule],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'itziarPB',
+      password: '123456',
+      database: 'my_db',
+      entities: ['dist/**/*.entity{.ts,.js}'],
+      synchronize: false,
+      retryDelay: 3000,
+      retryAttempts:10
+    }),
+    TeacherModule, ApiModule, StudentModule, LessonModule],
   controllers: [AppController],
   providers: [AppService],
 })
