@@ -2,10 +2,9 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TeacherModule } from './teacher/teacher.module';
-import { ApiModule } from './api/api.module';
-import { StudentModule } from './student/student.module';
-import { LessonModule } from './lesson/lesson.module';
+import { TeacherModule } from './api/modules/teacher.module';
+import { StudentModule } from './api/modules/student.module';
+import { LessonModule } from './api/modules/lesson.module';
 
 @Module({
   imports: [
@@ -14,14 +13,14 @@ import { LessonModule } from './lesson/lesson.module';
       host: 'localhost',
       port: 5432,
       username: 'itziarPB',
-      password: '123456',
+      password: 'class159',
       database: 'my_db',
       entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: false,
       retryDelay: 3000,
       retryAttempts:10
     }),
-    TeacherModule, ApiModule, StudentModule, LessonModule],
+    TeacherModule, StudentModule, LessonModule],
   controllers: [AppController],
   providers: [AppService],
 })
