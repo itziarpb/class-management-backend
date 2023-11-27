@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TeacherController } from '../controllers/teacher.controller';
 import { TeacherService } from '../services/teacher.service';
-import { Teacher } from '../entities/teacher.entity';
+import { Teacher } from '../domain/entities/teacher.entity';
 
 
 @Module({
@@ -11,4 +11,4 @@ import { Teacher } from '../entities/teacher.entity';
   controllers: [TeacherController],
   providers: [TeacherService]
 })
-export class TeacherModule {}
+export class TeacherModule { }

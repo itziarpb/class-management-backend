@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Student } from 'src/api/entities/student.entity';
+import { Student } from './student.entity';
+
 
 
 @Entity()

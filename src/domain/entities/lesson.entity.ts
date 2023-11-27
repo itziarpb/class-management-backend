@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { Student } from 'src/api/entities/student.entity';
+import { Student } from './student.entity';
+
 
 @Entity()
 export class Lesson {
@@ -9,9 +10,9 @@ export class Lesson {
   @Column()
   date: string;
 
-  @Column({default:false})
+  @Column({ default: false })
   payment: boolean;
 
   @ManyToOne(() => Student, (student) => student.lessons)
-    student: Student  
+  student: Student
 }
