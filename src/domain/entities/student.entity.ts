@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany,JoinColumn } from 'typeorm';
 import { Lesson } from './lesson.entity';
 import { Teacher } from './teacher.entity';
 
@@ -6,8 +6,8 @@ import { Teacher } from './teacher.entity';
 
 @Entity()
 export class Student {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @Column()
   name: string;
@@ -20,5 +20,4 @@ export class Student {
 
   @OneToMany(() => Lesson, (lesson) => lesson.student)
   lessons: Lesson[]
-
 }

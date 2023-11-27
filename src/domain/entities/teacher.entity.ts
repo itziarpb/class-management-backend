@@ -5,8 +5,8 @@ import { Student } from './student.entity';
 
 @Entity()
 export class Teacher {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @Column()
   email: string;
@@ -15,8 +15,8 @@ export class Teacher {
   password: string;
 
   @Column()
-  name:string;
+  name:string
 
   @OneToMany(() => Student, (student) => student.teacher)
-    students: Student[]
+  students: Student[]
 }
