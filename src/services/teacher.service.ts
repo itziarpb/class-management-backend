@@ -12,6 +12,11 @@ export class TeacherService {
   ) { }
 
   async create(createTeacherDto: CreateTeacherDto) {
-    return this.teacherRepo.save(createTeacherDto)
+    return this.teacherRepo.save(createTeacherDto);
   }
+  
+  async findAll(){
+    return this.teacherRepo.find();
+  }
+
 }

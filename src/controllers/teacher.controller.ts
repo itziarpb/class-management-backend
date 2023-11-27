@@ -12,9 +12,13 @@ export class TeacherController {
     async create(
         @Body() createTeacherDto: CreateTeacherDto
     ) {
-        return await this.teacherService.create(createTeacherDto)
+        return this.teacherService.create(createTeacherDto)
     }
 
+    @Get()
+    async findAll() {
+        return this.teacherService.findAll()
+    }
 
 
 
