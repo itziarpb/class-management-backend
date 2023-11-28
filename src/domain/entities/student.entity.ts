@@ -1,6 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany,JoinColumn } from 'typeorm';
 import { Lesson } from './lesson.entity';
 import { Teacher } from './teacher.entity';
+import { IsEnum } from 'class-validator';
+import { GradeEnum } from '../enums/grade.enum';
 
 
 
@@ -13,6 +15,7 @@ export class Student {
   name: string;
 
   @Column()
+  @IsEnum(GradeEnum)
   grade: string;
 
   @ManyToOne(() => Teacher, (teacher) => teacher.students)
