@@ -1,15 +1,17 @@
-import { Body, Controller, Get, Post, Param } from '@nestjs/common';
+import { Body, Controller, Get, Post, Param, ValidationPipe } from '@nestjs/common';
+import { ApiCreatedResponse, ApiResponse } from '@nestjs/swagger';
 import { CreateStudentDto } from 'src/domain/dtos/create-student.dto';
+import { Student } from 'src/domain/entities/student.entity';
 import { StudentService } from 'src/services/student.service';
 
-@Controller()
+@Controller('teacher/:teacherId/student')
 export class StudentController {
-
     constructor(
         private readonly studentService: StudentService
     ) { }
 
-    @Post('teacher/:teacherId/student')
+    @Post()
+    @ApiCreatedResponse({type: Student})        
     async create(
         @Param('teacherId') teacherId: string,
         @Body() createStudentDto: CreateStudentDto
@@ -17,9 +19,10 @@ export class StudentController {
         return await this.studentService.create(teacherId, createStudentDto)
     }
 
-    @Get('teacher/:teacherId/student')
+    @Get()
     async findAllByTeacher(@Param('teacherId') teacherId: string,) {
         return this.studentService.findAllByTeacher(teacherId)
     }
 }
+
 

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -8,6 +8,7 @@ import { LessonModule } from './modules/lesson.module';
 import { Lesson } from './domain/entities/lesson.entity';
 import { Student } from './domain/entities/student.entity';
 import { Teacher } from './domain/entities/teacher.entity';
+import { APP_PIPE } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -21,10 +22,15 @@ import { Teacher } from './domain/entities/teacher.entity';
       entities: [Lesson, Student, Teacher],
       synchronize: false,
       retryDelay: 3000,
-      retryAttempts:10
+      retryAttempts: 10
     }),
     TeacherModule, StudentModule, LessonModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    {
+      provide: APP_PIPE,
+      useClass: ValidationPipe,
+    },
+    AppService],
 })
-export class AppModule {}
+export class AppModule { }
