@@ -9,8 +9,6 @@ import { Teacher } from 'src/domain/entities/teacher.entity';
 @Injectable()
 export class LessonService {
   constructor(
-    @InjectRepository(Teacher)
-    private teacherRepo: Repository<Teacher>,
     @InjectRepository(Student)
     private studentRepo: Repository<Student>,
     @InjectRepository(Lesson)
@@ -41,11 +39,32 @@ export class LessonService {
           id: studentId
         }
       });
-      return this.lessonRepo.findBy({ student: student })
+      const allLessonsStudent= await this.lessonRepo.find({ 
+        where: {student:student},
+        relations:['student']
+      })
+      console.log(allLessonsStudent)
+      return allLessonsStudent
 
     }
     catch (err) {
       throw new NotFoundException("Teacher not found")
     }
   }
+
+  async delete(lessonId: string) {
+    try {
+      const lesson = await this.lessonRepo.findOneOrFail({
+        where: {
+          id: lessonId
+        }
+      });
+      this.lessonRepo.remove(lesson);
+      return `Lesson ${lessonId} delete`;
+    }
+    catch (err) {
+      throw new NotFoundException(`Lesson ${lessonId} not found`);
+    }
+  }
+
 }

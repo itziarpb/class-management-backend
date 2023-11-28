@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Student } from '../domain/entities/student.entity';
 import { CreateStudentDto } from 'src/domain/dtos/create-student.dto';
 import { Teacher } from 'src/domain/entities/teacher.entity';
+import { Lesson } from 'src/domain/entities/lesson.entity';
 
 @Injectable()
 export class StudentService {
@@ -12,6 +13,8 @@ export class StudentService {
     private teacherRepo: Repository<Teacher>,
     @InjectRepository(Student)
     private studentRepo: Repository<Student>,
+    @InjectRepository(Lesson)
+    private lessonRepo: Repository<Lesson>,
   ) { }
 
   async create(teacherId: string, createStudentDto: CreateStudentDto) {
@@ -38,11 +41,31 @@ export class StudentService {
           id: teacherId
         }
       });
-      return this.studentRepo.findBy({ teacher: teacher })
-      
+      const allStudentTeacher = await this.studentRepo.find({
+        where: { teacher: teacher },
+        relations: ['lessons']
+      })
+      console.log(allStudentTeacher)
+      return allStudentTeacher
     }
     catch (err) {
       throw new NotFoundException("Teacher not found")
     }
   }
+
+  async delete(studentId: string) {
+    try {
+      const student = await this.studentRepo.findOneOrFail({
+        where: {
+          id: studentId
+        }
+      });
+      this.studentRepo.remove(student);
+      return `Student ${studentId} delete`;
+    }
+    catch (err) {
+      throw new NotFoundException(`Student ${studentId} not found`);
+    }
+  }
+
 }
