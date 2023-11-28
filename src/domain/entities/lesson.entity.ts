@@ -13,6 +13,7 @@ export class Lesson {
   @Column({ default: false })
   payment: boolean;
 
-  @ManyToOne(() => Student, (student) => student.lessons)
+  @ManyToOne(() => Student, (student) => student.lessons, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'studentId' })
   student: Student
 }

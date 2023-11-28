@@ -19,9 +19,10 @@ export class Student {
   })
   grade: GradeEnum;
 
-  @ManyToOne(() => Teacher, (teacher) => teacher.students)
+  @ManyToOne(() => Teacher, (teacher) => teacher.students,{ onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'teacherId' })
   teacher: Teacher
 
-  @OneToMany(() => Lesson, (lesson) => lesson.student)
+  @OneToMany(() => Lesson, (lesson) => lesson.student,{ onDelete: 'CASCADE' })
   lessons: Lesson[]
 }

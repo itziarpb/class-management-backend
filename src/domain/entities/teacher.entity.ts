@@ -17,6 +17,6 @@ export class Teacher {
   @Column()
   name:string
 
-  @OneToMany(() => Student, (student) => student.teacher)
+  @OneToMany(() => Student, (student) => student.teacher,{ onDelete: 'CASCADE' })
   students: Student[]
 }
