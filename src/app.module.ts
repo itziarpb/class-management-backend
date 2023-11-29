@@ -9,6 +9,7 @@ import { Lesson } from './domain/entities/lesson.entity';
 import { Student } from './domain/entities/student.entity';
 import { Teacher } from './domain/entities/teacher.entity';
 import { APP_PIPE } from '@nestjs/core';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { APP_PIPE } from '@nestjs/core';
       retryDelay: 3000,
       retryAttempts: 10
     }),
-    TeacherModule, StudentModule, LessonModule],
+    TeacherModule, StudentModule, LessonModule, AuthModule],
   controllers: [AppController],
   providers: [
     {

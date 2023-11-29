@@ -8,12 +8,7 @@ export class TeacherController {
         private readonly teacherService: TeacherService
     ) { }
 
-    @Post()
-    async create(
-        @Body() createTeacherDto: CreateTeacherDto
-    ) {
-        return this.teacherService.create(createTeacherDto)
-    }
+
 
     @Get()
     async findAll() {

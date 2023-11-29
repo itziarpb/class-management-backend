@@ -1,8 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 import { Teacher } from '../domain/entities/teacher.entity';
-import { CreateTeacherDto } from 'src/domain/dtos/create-teacher.dto';
 
 @Injectable()
 export class TeacherService {
@@ -11,14 +10,17 @@ export class TeacherService {
     private teacherRepo: Repository<Teacher>,
   ) { }
 
-  async create(createTeacherDto: CreateTeacherDto) {
-    return this.teacherRepo.save(createTeacherDto);
-  }
-
   async findAll() {
     return this.teacherRepo.find();
   }
- 
+
+  async findOne(email: string): Promise<Teacher | null> {
+    const options: FindOneOptions<Teacher> = {
+      where: { email },
+    };
+    return await this.teacherRepo.findOne(options)
+  }
+
   async delete(teacherId: string) {
     try {
       const teacher = await this.teacherRepo.findOneOrFail({
