@@ -6,7 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Teacher } from 'src/domain/entities/teacher.entity';
 import { TeacherModule } from 'src/modules/teacher.module';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
+import { jwtConstants } from './constants/constants';
 
 @Module({
   imports: [

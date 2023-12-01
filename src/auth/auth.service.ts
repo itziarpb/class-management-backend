@@ -5,7 +5,7 @@ import * as bcryptjs from 'bcryptjs';
 import { Teacher } from 'src/domain/entities/teacher.entity';
 import { TeacherService } from 'src/services/teacher.service';
 import { Repository } from 'typeorm';
-import { LoginDto } from './login.dto';
+import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
