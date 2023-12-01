@@ -11,6 +11,9 @@ export class Student {
   id: string;
 
   @Column()
+  email: string;
+
+  @Column()
   name: string;
 
   @Column({
@@ -18,6 +21,9 @@ export class Student {
     enum: GradeEnum
   })
   grade: GradeEnum;
+
+  @Column()
+  price: number;
 
   @ManyToOne(() => Teacher, (teacher) => teacher.students,{ onDelete: 'CASCADE' })
   @JoinColumn({ name: 'teacherId' })

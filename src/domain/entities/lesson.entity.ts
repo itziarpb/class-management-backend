@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Student } from './student.entity';
+import { TaskEnum } from '../enums/task.enum';
 
 
 @Entity()
@@ -9,6 +10,16 @@ export class Lesson {
 
   @Column()
   date: string;
+
+  @Column()
+  description: string;
+
+  @Column({
+    type: "enum",
+    enum: TaskEnum,
+    default: TaskEnum.no,
+  })
+  task: TaskEnum
 
   @Column({ default: false })
   payment: boolean;
