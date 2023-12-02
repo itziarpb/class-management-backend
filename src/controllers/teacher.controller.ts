@@ -8,8 +8,6 @@ export class TeacherController {
         private readonly teacherService: TeacherService
     ) { }
 
-
-
     @Get()
     async findAll() {
         return this.teacherService.findAll()

@@ -14,6 +14,7 @@ export class TeacherService {
     return this.teacherRepo.find();
   }
 
+  //Login Teacher
   async findOne(email: string): Promise<Teacher | null> {
     const options: FindOneOptions<Teacher> = {
       where: { email },
@@ -21,6 +22,7 @@ export class TeacherService {
     return await this.teacherRepo.findOne(options)
   }
 
+  //Delete teacher
   async delete(teacherId: string) {
     try {
       const teacher = await this.teacherRepo.findOneOrFail({

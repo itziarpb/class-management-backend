@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Student } from '../domain/entities/student.entity';
@@ -17,23 +17,34 @@ export class StudentService {
     private lessonRepo: Repository<Lesson>,
   ) { }
 
-  async create(teacherId: string, createStudentDto: CreateStudentDto) {
-    try {
-      const teacher = await this.teacherRepo.findOneOrFail({
-        where: {
-          id: teacherId
-        }
-      });
-      return this.studentRepo.save({
-        ...createStudentDto,
-        teacher: teacher
-      })
-    }
-    catch (err) {
+  //Create new student
+  async create(teacherId: string, { name, email, price, grade }: CreateStudentDto) {
+
+    const teacher = await this.teacherRepo.findOneOrFail({
+      where: {
+        id: teacherId
+      }
+    });
+    if (!teacher) {
       throw new NotFoundException("Teacher not found")
     }
-  }
 
+    const student = await this.studentRepo.findOne({
+      where: {
+        email: email
+      }
+    });
+    if (student) {
+      throw new BadRequestException('Student already exists')
+    }
+
+    return this.studentRepo.save({
+      name, email, price, grade,
+      teacher: teacher
+    })
+  }
+  
+  //Get all student from the teacher
   async findAllByTeacher(teacherId: string) {
     try {
       const teacher = await this.teacherRepo.findOneOrFail({
@@ -52,6 +63,26 @@ export class StudentService {
       throw new NotFoundException("Teacher not found")
     }
   }
+
+  //Get one student (from a Teacher)
+  async findOneStudent(teacherId: string, studentId:string, ) {
+    try {
+      const teacher = await this.teacherRepo.findOneOrFail({
+        where: {
+          id: teacherId
+        }
+      });
+      const oneStudent = await this.studentRepo.find({
+        where: { id: studentId },
+      })
+      console.log(oneStudent)
+      return oneStudent
+    }
+    catch (err) {
+      throw new NotFoundException("Student not found")
+    }
+  }
+
 
   async delete(studentId: string) {
     try {
