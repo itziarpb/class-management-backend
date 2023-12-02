@@ -96,6 +96,13 @@ export class LessonService {
     }
   }
 
+  //put update lesson
+  async updateLesson(lessonId: string, data: Partial<Lesson>): Promise<Lesson> {
+    const lessonUpdate = await this.lessonRepo.update(lessonId, data);
+    return this.lessonRepo.findOne({
+      where: { id: lessonId },
+    });
+  }
 
   async delete(lessonId: string) {
     try {

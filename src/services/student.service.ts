@@ -43,7 +43,7 @@ export class StudentService {
       teacher: teacher
     })
   }
-  
+
   //Get all student from the teacher
   async findAllByTeacher(teacherId: string) {
     try {
@@ -65,7 +65,7 @@ export class StudentService {
   }
 
   //Get one student (from a Teacher)
-  async findOneStudent(teacherId: string, studentId:string, ) {
+  async findOneStudent(teacherId: string, studentId: string,) {
     try {
       const teacher = await this.teacherRepo.findOneOrFail({
         where: {
@@ -83,6 +83,13 @@ export class StudentService {
     }
   }
 
+  //put update student
+  async updateStudent(studentId: string, data: Partial<Student>): Promise<Student>{
+    const studentUpdate = await this.studentRepo.update(studentId, data);
+    return this.studentRepo.findOne({
+      where: { id: studentId },
+    });
+  }
 
   async delete(studentId: string) {
     try {

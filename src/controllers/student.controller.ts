@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Param, ValidationPipe, Delete, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Param, ValidationPipe, Delete, UseGuards, Put } from '@nestjs/common';
 import { ApiCreatedResponse, ApiResponse } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/guard/auth.guard';
 import { CreateStudentDto } from 'src/domain/dtos/create-student.dto';
@@ -14,7 +14,7 @@ export class StudentController {
     //Create new Student
     @UseGuards(AuthGuard)
     @Post()
-    @ApiCreatedResponse({type: Student})        
+    @ApiCreatedResponse({ type: Student })
     async create(
         @Param('teacherId') teacherId: string,
         @Body() createStudentDto: CreateStudentDto
@@ -35,10 +35,18 @@ export class StudentController {
     async findOneStudent(
         @Param('teacherId') teacherId: string,
         @Param('studentId') studentId: string,
-        ) {
-        return this.studentService.findOneStudent(teacherId,studentId)
+    ) {
+        return this.studentService.findOneStudent(teacherId, studentId)
     }
 
+    //Put update student
+    @UseGuards(AuthGuard)
+    @Put(':studentId')
+    async updateStudent(@Param('studentId') studentId: string, @Body() data: Partial<Student>) {
+        return this.studentService.updateStudent(studentId, data);
+    }
+
+    //Delete student
     @Delete('/:id')
     async delete(@Param('id') estudentId: string) {
         return this.studentService.delete(estudentId)

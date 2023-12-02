@@ -18,7 +18,7 @@ export class AuthService {
         private teacherRepo: Repository<Teacher>,
       ) { }
 
-      //REGISTER
+      //Register a new teacher
       async register({ name, email, password }: CreateTeacherDto) {
         const teacher = await this.teacherService.findOne(email);
         if (teacher) {
@@ -31,7 +31,7 @@ export class AuthService {
         });
       }
 
-      //LOGIN
+      //Teacher login
       async login({email,password}: LoginDto){
         const userTeacher = await this.teacherService.findOne(email);
         if (!userTeacher) {

@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/guard/auth.guard';
 import { CreateLessonDto } from 'src/domain/dtos/create-lesson.dto';
+import { Lesson } from 'src/domain/entities/lesson.entity';
 import { LessonService } from 'src/services/lesson.service';
 
 @Controller()
@@ -45,6 +46,14 @@ export class LessonController {
         return this.lessonService.findOneLesson(studentId, lessonId)
     }
 
+    //Put update lesson
+    @UseGuards(AuthGuard)
+    @Put('student/:studentId/lesson/:lessonId')
+    async updateLesson(@Param('lessonId') lessonId: string, @Body() data: Partial<Lesson>) {
+        return this.lessonService.updateLesson(lessonId, data);
+    }
+
+    //Delete lesson
     @Delete('student/:studentId/lesson/:id')
     async delete(@Param('id') lessonId: string) {
         return this.lessonService.delete(lessonId)

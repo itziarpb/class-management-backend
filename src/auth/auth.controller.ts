@@ -10,6 +10,7 @@ export class AuthController {
         private readonly authService: AuthService,
     ) { }
 
+    //Register a new teacher
     @Post('/register')
     async register(
         @Body() createTeacherDto: CreateTeacherDto
@@ -17,6 +18,7 @@ export class AuthController {
         return this.authService.register(createTeacherDto)
     }
 
+    //Teacher login
     @Post('login')
     async login(
         @Body() LoginDto: LoginDto
