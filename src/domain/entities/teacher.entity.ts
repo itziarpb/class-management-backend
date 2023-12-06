@@ -1,8 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Student } from './student.entity';
 
-
-
 @Entity()
 export class Teacher {
   @PrimaryGeneratedColumn("uuid")
@@ -15,8 +13,8 @@ export class Teacher {
   password: string;
 
   @Column()
-  name:string
+  name: string
 
-  @OneToMany(() => Student, (student) => student.teacher,{ onDelete: 'CASCADE' })
+  @OneToMany(() => Student, (student) => student.teacher, { onDelete: 'CASCADE' })
   students: Student[]
 }

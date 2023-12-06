@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Post, UseGuards, Request } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateTeacherDto } from 'src/domain/dtos/create-teacher.dto';
 import { LoginDto } from './dto/login.dto';
 import { AuthGuard } from './guard/auth.guard';
+import { CreateUserDto } from 'src/domain/dtos/create-user.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -10,16 +10,16 @@ export class AuthController {
         private readonly authService: AuthService,
     ) { }
 
-    //Register a new teacher
+    //Register a new user
     @Post('/register')
     async register(
-        @Body() createTeacherDto: CreateTeacherDto
+        @Body() createUserDto: CreateUserDto
     ) {
-        return this.authService.register(createTeacherDto)
+        return this.authService.register(createUserDto)
     }
 
-    //Teacher login
-    @Post('login')
+    //User login
+    @Post('/login')
     async login(
         @Body() LoginDto: LoginDto
     ) {
@@ -30,6 +30,6 @@ export class AuthController {
     @UseGuards(AuthGuard)
     @Get('profile')
     getProfile(@Request() req) {
-      return req.user;
+        return req.user;
     }
 }

@@ -10,6 +10,8 @@ import { Student } from './domain/entities/student.entity';
 import { Teacher } from './domain/entities/teacher.entity';
 import { APP_PIPE } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
+import { UserModule } from './modules/user.module';
+import { User } from './domain/entities/user.entity';
 
 @Module({
   imports: [
@@ -20,12 +22,12 @@ import { AuthModule } from './auth/auth.module';
       username: 'user',
       password: 'pass',
       database: 'my_db',
-      entities: [Lesson, Student, Teacher],
+      entities: [User, Lesson, Student, Teacher],
       synchronize: false,
       retryDelay: 3000,
       retryAttempts: 10
     }),
-    TeacherModule, StudentModule, LessonModule, AuthModule],
+    TeacherModule, StudentModule, LessonModule, AuthModule, UserModule],
   controllers: [AppController],
   providers: [
     {

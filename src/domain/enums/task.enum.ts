@@ -1,5 +1,5 @@
 export enum TaskEnum{
     no = "No",
-    pending  = "Pendiente",
-    Corrected  = "Corregida"
+    pending  = "Pending",
+    corrected  = "Correct"
 }
