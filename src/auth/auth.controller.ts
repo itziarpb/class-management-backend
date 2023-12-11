@@ -26,10 +26,5 @@ export class AuthController {
         return this.authService.login(LoginDto)
     }
 
-    //Llamada de prueba. Borrar
-    @UseGuards(AuthGuard)
-    @Get('profile')
-    getProfile(@Request() req) {
-        return req.user;
-    }
+   
 }

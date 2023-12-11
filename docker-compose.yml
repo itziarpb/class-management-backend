@@ -9,7 +9,8 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - '5432:5432'
-
+    volumes:
+    - /postgres_data:/var/lib/postgresql
 volumes:
   postgres_data:
     external: true

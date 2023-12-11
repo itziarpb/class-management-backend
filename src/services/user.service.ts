@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/domain/entities/user.entity';
 import { FindOneOptions, Repository } from 'typeorm';
@@ -11,11 +11,13 @@ export class UserService {
         private userRepo: Repository<User>,
     ) { }
 
-    //Login User
-    async findOne(email: string): Promise<User | null> {
+    //FindOne function for register and login
+    async findOne(email: string): Promise<User> {
         const options: FindOneOptions<User> = {
             where: { email },
         };
-        return await this.userRepo.findOne(options)
+        const user = await this.userRepo.findOne(options)
+        return user
+
     }
 }
