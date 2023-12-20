@@ -33,10 +33,9 @@ export class StudentController {
     @UseGuards(AuthGuard)
     @Get('/:studentId')
     async findOneStudent(
-        @Param('teacherId') teacherId: string,
         @Param('studentId') studentId: string,
     ) {
-        return this.studentService.findOneStudent(teacherId, studentId)
+        return this.studentService.getStudent(studentId)
     }
 
     //Put update student

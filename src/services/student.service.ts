@@ -5,10 +5,12 @@ import { Student } from '../domain/entities/student.entity';
 import { CreateStudentDto } from 'src/domain/dtos/create-student.dto';
 import { Teacher } from 'src/domain/entities/teacher.entity';
 import { Lesson } from 'src/domain/entities/lesson.entity';
+import { TeacherService } from './teacher.service';
 
 @Injectable()
 export class StudentService {
   constructor(
+    private readonly teacherService: TeacherService,
     @InjectRepository(Teacher)
     private teacherRepo: Repository<Teacher>,
     @InjectRepository(Student)
@@ -19,12 +21,7 @@ export class StudentService {
 
   //Create new student
   async create(teacherId: string, { name, email, price, grade }: CreateStudentDto) {
-
-    const teacher = await this.teacherRepo.findOneOrFail({
-      where: {
-        id: teacherId
-      }
-    });
+    const teacher = await this.teacherService.getTeacher(teacherId)
     if (!teacher) {
       throw new NotFoundException("Teacher not found")
     }
@@ -43,6 +40,22 @@ export class StudentService {
       teacher: teacher
     })
   }
+
+  //get student by id
+  async getStudent(teacherId: string) {
+    try {
+      const student = await this.studentRepo.findOne({
+        where: {
+          id: teacherId
+        }
+      });
+      return student
+    }
+    catch (err) {
+      throw new NotFoundException("Student not found")
+    }
+  }
+
 
   //Get all student from the teacher
   async findAllByTeacher(teacherId: string) {
@@ -64,27 +77,10 @@ export class StudentService {
     }
   }
 
-  //Get one student (from a Teacher)
-  async findOneStudent(teacherId: string, studentId: string,) {
-    try {
-      const teacher = await this.teacherRepo.findOneOrFail({
-        where: {
-          id: teacherId
-        }
-      });
-      const oneStudent = await this.studentRepo.find({
-        where: { id: studentId },
-      })
-      console.log(oneStudent)
-      return oneStudent
-    }
-    catch (err) {
-      throw new NotFoundException("Student not found")
-    }
-  }
+
 
   //put update student
-  async updateStudent(studentId: string, data: Partial<Student>): Promise<Student>{
+  async updateStudent(studentId: string, data: Partial<Student>): Promise<Student> {
     const studentUpdate = await this.studentRepo.update(studentId, data);
     return this.studentRepo.findOne({
       where: { id: studentId },

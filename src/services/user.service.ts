@@ -22,11 +22,16 @@ export class UserService {
 
     //get user by id
     async getUser(userId: string) {
-        const user = await this.userRepo.findOneOrFail({
-            where: {
-                id: userId
-            }
-        });
-        return user
+        try {
+            const user = await this.userRepo.findOne({
+                where: {
+                    id: userId
+                }
+            });
+            return user
+        } 
+        catch (err) {
+            throw new NotFoundException("User not found")
+        }
     }
 }

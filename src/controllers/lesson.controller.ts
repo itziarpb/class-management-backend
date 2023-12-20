@@ -18,7 +18,7 @@ export class LessonController {
         @Param('studentId') studentId: string,
         @Body() createLessonDto: CreateLessonDto
     ) {
-        return await this.lessonService.create(studentId, createLessonDto)
+        return await this.lessonService.createLesson(studentId, createLessonDto)
     }
 
     //Get all lesson
