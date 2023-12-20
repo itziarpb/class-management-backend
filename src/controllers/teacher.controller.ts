@@ -15,7 +15,6 @@ export class TeacherController {
         return this.teacherService.createTeacher(userId)
     }
 
-//777777777
 
 
 

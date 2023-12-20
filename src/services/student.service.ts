@@ -5,10 +5,12 @@ import { Student } from '../domain/entities/student.entity';
 import { CreateStudentDto } from 'src/domain/dtos/create-student.dto';
 import { Teacher } from 'src/domain/entities/teacher.entity';
 import { Lesson } from 'src/domain/entities/lesson.entity';
+import { TeacherService } from './teacher.service';
 
 @Injectable()
 export class StudentService {
   constructor(
+    private readonly teacherService: TeacherService,
     @InjectRepository(Teacher)
     private teacherRepo: Repository<Teacher>,
     @InjectRepository(Student)
@@ -19,12 +21,7 @@ export class StudentService {
 
   //Create new student
   async create(teacherId: string, { name, email, price, grade }: CreateStudentDto) {
-
-    const teacher = await this.teacherRepo.findOneOrFail({
-      where: {
-        id: teacherId
-      }
-    });
+    const teacher = await this.teacherService.getTeacher(teacherId)
     if (!teacher) {
       throw new NotFoundException("Teacher not found")
     }

@@ -1,8 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindOneOptions, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Teacher } from '../domain/entities/teacher.entity';
-import { User } from 'src/domain/entities/user.entity';
 import { UserService } from './user.service';
 
 @Injectable()
@@ -11,15 +10,12 @@ export class TeacherService {
     private readonly userService: UserService,
     @InjectRepository(Teacher)
     private teacherRepo: Repository<Teacher>,
-    
+
   ) { }
 
   //Create new teacher 
-
   async createTeacher(userId: string) {
     const user = await this.userService.getUser(userId)
-    console.log("🚀 ~ file: teacher.service.ts:21 ~ TeacherService ~ createTeacher ~ user:", user)
-
     const teacher = await this.teacherRepo.findOne({
       where: {
         user: user
@@ -32,6 +28,21 @@ export class TeacherService {
       user: user
     })
   }
+
+  //get teacher by id
+  async getTeacher(teacherId: string) {
+    const teacher = await this.teacherRepo.findOneOrFail({
+        where: {
+            id: teacherId
+        }
+    });
+    return teacher
+}
+
+
+
+
+
 
   async findAll() {
     return this.teacherRepo.find();
