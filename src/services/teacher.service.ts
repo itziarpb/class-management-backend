@@ -31,13 +31,18 @@ export class TeacherService {
 
   //get teacher by id
   async getTeacher(teacherId: string) {
-    const teacher = await this.teacherRepo.findOneOrFail({
+    try {
+      const teacher = await this.teacherRepo.findOne({
         where: {
-            id: teacherId
+          id: teacherId
         }
-    });
-    return teacher
-}
+      });
+      return teacher
+    }
+    catch (err) {
+      throw new NotFoundException("Teacher not found")
+    }
+  }
 
 
 
