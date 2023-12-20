@@ -9,11 +9,13 @@ import { TeacherService } from 'src/services/teacher.service';
 import { LessonController } from 'src/controllers/lesson.controller';
 import { LessonService } from 'src/services/lesson.service';
 import { Lesson } from 'src/domain/entities/lesson.entity';
+import { User } from 'src/domain/entities/user.entity';
+import { UserService } from 'src/services/user.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Student, Teacher, Lesson])],
+    TypeOrmModule.forFeature([Student, Teacher, Lesson, User])],
   controllers: [StudentController, TeacherController, LessonController],
-  providers: [StudentService, TeacherService, LessonService]
+  providers: [StudentService, TeacherService, LessonService, UserService]
 })
 export class StudentModule {}
