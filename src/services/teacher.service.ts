@@ -2,25 +2,42 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOneOptions, Repository } from 'typeorm';
 import { Teacher } from '../domain/entities/teacher.entity';
+import { User } from 'src/domain/entities/user.entity';
+import { UserService } from './user.service';
 
 @Injectable()
 export class TeacherService {
   constructor(
+    private readonly userService: UserService,
     @InjectRepository(Teacher)
     private teacherRepo: Repository<Teacher>,
+    
   ) { }
+
+  //Create new teacher 
+
+  async createTeacher(userId: string) {
+    const user = await this.userService.getUser(userId)
+    console.log("🚀 ~ file: teacher.service.ts:21 ~ TeacherService ~ createTeacher ~ user:", user)
+
+    const teacher = await this.teacherRepo.findOne({
+      where: {
+        user: user
+      }
+    });
+    if (teacher) {
+      throw new BadRequestException('Teacher already exists')
+    }
+    return this.teacherRepo.save({
+      user: user
+    })
+  }
 
   async findAll() {
     return this.teacherRepo.find();
   }
 
-  //Login Teacher
-  async findOne(email: string): Promise<Teacher | null> {
-    const options: FindOneOptions<Teacher> = {
-      where: { email },
-    };
-    return await this.teacherRepo.findOne(options)
-  }
+
 
   //Delete teacher
   async delete(teacherId: string) {

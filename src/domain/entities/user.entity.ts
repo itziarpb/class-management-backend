@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
+import { Teacher } from './teacher.entity';
 
 @Entity()
 export class User {
@@ -13,4 +14,8 @@ export class User {
 
   @Column()
   name: string;
+
+  @OneToOne(() => Teacher, (teacher) => teacher.user,{ onDelete: 'CASCADE' })
+  @JoinColumn()
+  teacher: Teacher
 }

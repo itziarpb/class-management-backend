@@ -24,8 +24,8 @@ export class AuthController {
         @Res() res: any, 
         @Body() loginDto: LoginDto
     ) {
-        const accessToken = await this.authService.login(loginDto)
-        return res.send({ accessToken });
+        const loginData = await this.authService.login(loginDto)
+        return res.send({ loginData });
     }
 
    

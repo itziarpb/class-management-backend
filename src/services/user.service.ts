@@ -18,6 +18,15 @@ export class UserService {
         };
         const user = await this.userRepo.findOne(options)
         return user
+    }
 
+    //get user by id
+    async getUser(userId: string) {
+        const user = await this.userRepo.findOneOrFail({
+            where: {
+                id: userId
+            }
+        });
+        return user
     }
 }
