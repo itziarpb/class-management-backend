@@ -1,9 +1,14 @@
 <h1 align="center"> CLASS MANAGEMENT </h1>
 
-![logotipo del proyecto](/home/itziar/Documentos/vscode/class-management-backend/image.png)
+![logotipo del proyecto](image.png)
 
-Aplicación para organizar las clases de un profesor particular!
-
-
+¡De la necesidad surge esta idea!
+Una aplicación destinada a profesores particulares y sus alumnos: útil para organizar las clases y las tareas pendientes en el calendario, llevar un control de los alumnos y de los pagos, etc
 
 :construction: Proyecto en construcción :construction:
+
+
+This idea comes from necessity!
+An application for private teachers and their students: useful for organizing classes and pending tasks on the calendar, keeping track of students and payments, etc.
+
+:construction: Project under construction :construction:
