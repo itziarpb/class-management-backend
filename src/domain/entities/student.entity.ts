@@ -11,9 +11,6 @@ export class Student {
   id: string;
 
   @Column()
-  email: string;
-
-  @Column()
   name: string;
 
   @Column({
@@ -22,13 +19,10 @@ export class Student {
   })
   grade: GradeEnum;
 
-  @Column()
-  price: number;
-
-  @ManyToOne(() => Teacher, (teacher) => teacher.students,{ onDelete: 'CASCADE' })
+  @ManyToOne(() => Teacher, (teacher) => teacher.students, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'teacherId' })
   teacher: Teacher
 
-  @OneToMany(() => Lesson, (lesson) => lesson.student,{ onDelete: 'CASCADE' })
+  @OneToMany(() => Lesson, (lesson) => lesson.student, { onDelete: 'CASCADE' })
   lessons: Lesson[]
 }

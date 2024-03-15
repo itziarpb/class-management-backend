@@ -9,10 +9,16 @@ export class Lesson {
   id: string;
 
   @Column()
-  date: string;
+  description: string;
 
   @Column()
-  description: string;
+  date: string;
+
+  @Column({ default: "01:00" })
+  duration: string;
+
+  @Column({ default: false })
+  done: boolean;
 
   @Column({
     type: "enum",
@@ -20,6 +26,9 @@ export class Lesson {
     default: TaskEnum.no,
   })
   task: TaskEnum
+
+  @Column()
+  price: number;
 
   @Column({ default: false })
   payment: boolean;
