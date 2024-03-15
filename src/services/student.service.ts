@@ -20,33 +20,37 @@ export class StudentService {
   ) { }
 
   //Create new student
-  async create(teacherId: string, { name, email, price, grade }: CreateStudentDto) {
-    const teacher = await this.teacherService.getTeacher(teacherId)
+  async create(teacherId: string, { name, grade }: CreateStudentDto) {
+    const teacher = await this.teacherService.getTeacherById(teacherId)
     if (!teacher) {
       throw new NotFoundException("Teacher not found")
     }
 
-    const student = await this.studentRepo.findOne({
+    const existingStudent = await this.studentRepo.findOne({
       where: {
-        email: email
+        name: name
       }
     });
-    if (student) {
+    if (existingStudent) {
       throw new BadRequestException('Student already exists')
     }
 
-    return this.studentRepo.save({
-      name, email, price, grade,
-      teacher: teacher
-    })
+    const student = this.studentRepo.create({
+      name,
+      grade,
+      teacher: teacher // Asignar el profesor al estudiante
+    });
+
+
+    return this.studentRepo.save(student)
   }
 
   //get student by id
-  async getStudent(teacherId: string) {
+  async getStudent(studentId: string) {
     try {
       const student = await this.studentRepo.findOne({
         where: {
-          id: teacherId
+          id: studentId
         }
       });
       return student
@@ -79,27 +83,27 @@ export class StudentService {
 
 
 
-  //put update student
-  async updateStudent(studentId: string, data: Partial<Student>): Promise<Student> {
-    const studentUpdate = await this.studentRepo.update(studentId, data);
-    return this.studentRepo.findOne({
-      where: { id: studentId },
-    });
-  }
+  // //put update student
+  // async updateStudent(studentId: string, data: Partial<Student>): Promise<Student> {
+  //   const studentUpdate = await this.studentRepo.update(studentId, data);
+  //   return this.studentRepo.findOne({
+  //     where: { id: studentId },
+  //   });
+  // }
 
-  async delete(studentId: string) {
-    try {
-      const student = await this.studentRepo.findOneOrFail({
-        where: {
-          id: studentId
-        }
-      });
-      this.studentRepo.remove(student);
-      return `Student ${studentId} delete`;
-    }
-    catch (err) {
-      throw new NotFoundException(`Student ${studentId} not found`);
-    }
-  }
+  // async delete(studentId: string) {
+  //   try {
+  //     const student = await this.studentRepo.findOneOrFail({
+  //       where: {
+  //         id: studentId
+  //       }
+  //     });
+  //     this.studentRepo.remove(student);
+  //     return `Student ${studentId} delete`;
+  //   }
+  //   catch (err) {
+  //     throw new NotFoundException(`Student ${studentId} not found`);
+  //   }
+  // }
 
 }

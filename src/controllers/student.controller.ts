@@ -5,15 +5,15 @@ import { CreateStudentDto } from 'src/domain/dtos/create-student.dto';
 import { Student } from 'src/domain/entities/student.entity';
 import { StudentService } from 'src/services/student.service';
 
-@Controller('teacher/:teacherId/student')
+@Controller('/student')
 export class StudentController {
     constructor(
         private readonly studentService: StudentService
     ) { }
 
     //Create new Student
-    @UseGuards(AuthGuard)
-    @Post()
+    // @UseGuards(AuthGuard)
+    @Post("/:teacherId")
     @ApiCreatedResponse({ type: Student })
     async create(
         @Param('teacherId') teacherId: string,
@@ -23,14 +23,14 @@ export class StudentController {
     }
 
     //Get all student (from a Teacher)
-    @UseGuards(AuthGuard)
-    @Get()
+    // @UseGuards(AuthGuard)
+    @Get("/:teacherId")
     async findAllByTeacher(@Param('teacherId') teacherId: string,) {
         return this.studentService.findAllByTeacher(teacherId)
     }
 
     //Get one student (from a Teacher)
-    @UseGuards(AuthGuard)
+    // @UseGuards(AuthGuard)
     @Get('/:studentId')
     async findOneStudent(
         @Param('studentId') studentId: string,
@@ -38,18 +38,18 @@ export class StudentController {
         return this.studentService.getStudent(studentId)
     }
 
-    //Put update student
-    @UseGuards(AuthGuard)
-    @Put(':studentId')
-    async updateStudent(@Param('studentId') studentId: string, @Body() data: Partial<Student>) {
-        return this.studentService.updateStudent(studentId, data);
-    }
+    // //Put update student
+    // @UseGuards(AuthGuard)
+    // @Put(':studentId')
+    // async updateStudent(@Param('studentId') studentId: string, @Body() data: Partial<Student>) {
+    //     return this.studentService.updateStudent(studentId, data);
+    // }
 
-    //Delete student
-    @Delete('/:id')
-    async delete(@Param('id') estudentId: string) {
-        return this.studentService.delete(estudentId)
-    }
+    // //Delete student
+    // @Delete('/:id')
+    // async delete(@Param('id') estudentId: string) {
+    //     return this.studentService.delete(estudentId)
+    // }
 }
 
 
