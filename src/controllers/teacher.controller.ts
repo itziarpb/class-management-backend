@@ -9,25 +9,22 @@ export class TeacherController {
         private readonly teacherService: TeacherService
     ) { }
 
-    @UseGuards(AuthGuard)
     @Post('/:userId')
     async createTeacher(@Param('userId') userId: string){
         return this.teacherService.createTeacher(userId)
     }
 
-
-
-
-
-
-
-    @Get()
-    async findAll() {
-        return this.teacherService.findAll()
+    @Get('/:userId')
+    async getTeacher(@Param('userId') userId: string) {
+        return this.teacherService.getTeacher(userId)
     }
+    // @Get()
+    // async findAll() {
+    //     return this.teacherService.findAll()
+    // }
 
-    @Delete('/:id')
-    async delete(@Param('id') teacherId: string) {
-        return this.teacherService.delete(teacherId)
-    }
+    // @Delete('/:id')
+    // async delete(@Param('id') teacherId: string) {
+    //     return this.teacherService.delete(teacherId)
+    // }
 }

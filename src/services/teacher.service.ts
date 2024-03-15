@@ -13,7 +13,7 @@ export class TeacherService {
 
   ) { }
 
-  //Create new teacher 
+  //Create new teacher.   //Assign a teacherID to a user. This will change in future version
   async createTeacher(userId: string) {
     const user = await this.userService.getUser(userId)
     const teacher = await this.teacherRepo.findOne({
@@ -29,8 +29,24 @@ export class TeacherService {
     })
   }
 
+  //get teacher by user
+  async getTeacher(userId: string) {
+    try {
+      const user = await this.userService.getUser(userId)
+      const teacher = await this.teacherRepo.findOne({
+        where: {
+          user: user
+        }
+      });
+      return teacher
+    }
+    catch (err) {
+      throw new NotFoundException("Teacher not found")
+    }
+  }
+
   //get teacher by id
-  async getTeacher(teacherId: string) {
+  async getTeacherById(teacherId: string) {
     try {
       const teacher = await this.teacherRepo.findOne({
         where: {

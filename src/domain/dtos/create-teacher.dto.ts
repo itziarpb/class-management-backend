@@ -1,18 +1,8 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from "class-validator";
+import { IsEnum, IsNotEmpty, IsString } from "class-validator";
+import { GradeEnum } from "../enums/grade.enum";
 
-export class CreateTeacherDto{
-    @IsString()
-    @IsNotEmpty()
-    name:string;
+export class CreateTeacherDto {
 
-    @IsEmail()
-    @IsNotEmpty()
-    email:string;
-
-    @IsString()
-    @IsNotEmpty()
-    @MinLength(6)
-    password:string;
 }
 
 
